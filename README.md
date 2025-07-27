@@ -53,6 +53,22 @@ Cosine Annealing LR Scheduler (T_max=100)
     Temperature beta = 2.0
     
 
-### **Performance**
+## **Performance**
 Performance metrics (value loss, Q-loss, policy loss) are logged in TensorBoard.
+
+###Policy Loss:
+
+<img width="784" height="452" alt="image" src="https://github.com/user-attachments/assets/94013712-f4d1-4d3b-b3ed-8ef43a318362" />
+
+
+
+### Value Loss:
+
+<img width="751" height="452" alt="image" src="https://github.com/user-attachments/assets/20b56ffc-0353-4eb5-a4dd-4ae57c1d8a63" />
+
+
+### Q Loss: 
+
+<img width="751" height="452" alt="image" src="https://github.com/user-attachments/assets/fb9876b1-300f-4eee-9054-9135ab38410a" />
+
 
