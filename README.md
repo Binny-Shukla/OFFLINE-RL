@@ -1,48 +1,57 @@
-# **Offline RL Collection**
+# **Behavior Cloning (BC)**
 
-This repository is a research-focused collection of Offline Reinforcement Learning (RL) algorithms, implemented from scratch in PyTorch with a focus on clarity, technical depth, and reproducibility.
+This branch contains our implementation of Behavior Cloning (BC), a simple yet foundational offline reinforcement learning (RL) algorithm.
+BC serves as a baseline for learning policies directly from fixed datasets without any environment interaction.
 
-Each algorithm is maintained on its own branch for clean isolation and easy benchmarking. This setup allows us to evolve and experiment with each approach independently while maintaining a unified structure.
+## **Overview**
 
-**Implemented Algorithms**
+Behavior Cloning treats offline RL as a supervised learning problem, directly imitating the behavior policy that generated the dataset.
 
-## **Behavior Cloning (BC)**
-A supervised learning baseline for offline RL, trained directly on dataset actions without environment interaction.
-Branch: bc
+The policy (actor network) is trained by minimizing the Mean Squared Error (MSE) between predicted actions and dataset actions:
 
-## **Implicit Q-Learning (IQL)**
+    python
+    loss = MSE(pred_actions, actions)
+    
+There is no critic, value function, or advantage estimation — making BC fast to train but prone to distributional shift in more complex tasks.
 
-An advantage-weighted actor-critic algorithm designed for high-quality offline RL without explicit behavior regularization.
-Branch: iql
+### **Training Details**
 
-### Why This Repo?
+    Optimizer: AdamW (no weight decay)
+    
+    Learning Rate: 3e-4
+    
+    Batch Size: 256
+    
+    Epochs: 30
+    
+    Scheduler: Cosine Annealing (T_max=30)
+    
+    Gradient Clipping: max_norm=0.5
+    
+    Loss is logged via TensorBoard (./runs/bc) and visualized for each epoch.
 
-Most open-source implementations either:
+### **Performance**
+Performance is measured by training loss across epochs.
+Below is the trend of BC loss (MSE) over 30 epochs:
 
-Abstract away the math behind wrappers, or
+<img width="2400" height="1500" alt="image" src="https://github.com/user-attachments/assets/68cc6cdc-6f2f-49d9-b63b-934fcb419176" />
 
-Mix multiple algorithms together, making it hard to study them in isolation.
 
- #### Here, each branch:
 
-Implements the algorithm from scratch using clean PyTorch.
+#### **Usage**
 
-Includes mathematical derivations (as comments and in the README).
 
-Uses TensorBoard logging and easily exportable results for papers.
+1. **Install dependencies**:
 
-#### How to Use
+        bash
+        pip install torch torchvision tensorboard tqdm
+    
+2. **Train BC**:
 
-Each branch has:
+        bash
+        python train_bc.ipynb
+    
+3. **Launch TensorBoard**:
 
-A Jupyter Notebook (*_training.ipynb) with the full training pipeline.
-
-TensorBoard support for monitoring.
-
-A README explaining the loss functions, math, and performance.
-
-To clone a specific algorithm branch:
-
-git clone -b <branch-name> https://github.com/Binny-Shukla/offline-rl-collection.git
-
-cd offline-rl-collection
+        bash
+        tensorboard --logdir=./runs/bc
