@@ -1,48 +1,62 @@
-# **Offline RL Collection**
+# **Conservative Q-Learning (CQL) – Offline RL**
 
-This repository is a research-focused collection of Offline Reinforcement Learning (RL) algorithms, implemented from scratch in PyTorch with a focus on clarity, technical depth, and reproducibility.
+This repository contains a self-contained Jupyter Notebook implementing Conservative Q-Learning (CQL) for offline reinforcement learning.
+It is designed for quick experimentation and understanding of the CQL algorithm without requiring D4RL or complex environment setups.
 
-Each algorithm is maintained on its own branch for clean isolation and easy benchmarking. This setup allows us to evolve and experiment with each approach independently while maintaining a unified structure.
+## **Overview**
 
-**Implemented Algorithms**
+CQL is an offline RL algorithm that:
 
-## **Behavior Cloning (BC)**
-A supervised learning baseline for offline RL, trained directly on dataset actions without environment interaction.
-Branch: bc
+    Penalizes the Q-function to avoid overestimation on unseen actions.
+    
+    Learns a conservative critic and actor from a fixed dataset.
+    
+    Works without online environment rollouts, purely from HDF5 datasets.
+    
 
-## **Implicit Q-Learning (IQL)**
+This notebook includes:
 
-An advantage-weighted actor-critic algorithm designed for high-quality offline RL without explicit behavior regularization.
-Branch: iql
+    Full training loop (policy and critic updates).
+    
+    TD3-style policy delay and target smoothing.
+    
+    TensorBoard logging and Matplotlib visualizations for losses.
+    
+    Final plots for Policy Loss and Critic (Q) Loss.
 
-### Why This Repo?
+##### How to Use
 
-Most open-source implementations either:
+Open the notebook:
 
-Abstract away the math behind wrappers, or
+    bash
+    jupyter notebook CQL_OfflineRL.ipynb
+   
+   Run all cells:
+   
+    The dataset is loaded from HDF5.
+    
+    Training runs for the specified number of epochs (default: epochs=30).
+    
+    Loss curves are automatically logged to TensorBoard and saved as PNGs.
 
-Mix multiple algorithms together, making it hard to study them in isolation.
+#### **Visualize results:**
 
- #### Here, each branch:
+    bash
+    tensorboard --logdir ./runs/CQL
 
-Implements the algorithm from scratch using clean PyTorch.
+Results
+By epoch 30:
 
-Includes mathematical derivations (as comments and in the README).
+Q Loss stabilizes near 1.0 after an initial peak.
 
-Uses TensorBoard logging and easily exportable results for papers.
+Policy Loss converges around -100, indicating stable learning.
 
-#### How to Use
+**Policy loss :**
 
-Each branch has:
 
-A Jupyter Notebook (*_training.ipynb) with the full training pipeline.
+<img width="989" height="590" alt="33d78102-f7d6-46ce-b3c2-3b1c4f7d4182" src="https://github.com/user-attachments/assets/cc1dca97-d371-4c3a-8999-8dc9f4f773e1" />
 
-TensorBoard support for monitoring.
 
-A README explaining the loss functions, math, and performance.
+** Q Loss:**
 
-To clone a specific algorithm branch:
-
-git clone -b <branch-name> https://github.com/Binny-Shukla/offline-rl-collection.git
-
-cd offline-rl-collection
+<img width="989" height="590" alt="a48746aa-9884-4ec2-b18a-88212d2f9b3e" src="https://github.com/user-attachments/assets/ea5296af-7cba-4bd4-96d6-dcb7fd4fcd7d" />
