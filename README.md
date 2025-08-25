@@ -57,6 +57,6 @@ Policy Loss converges around -100, indicating stable learning.
 <img width="989" height="590" alt="33d78102-f7d6-46ce-b3c2-3b1c4f7d4182" src="https://github.com/user-attachments/assets/cc1dca97-d371-4c3a-8999-8dc9f4f773e1" />
 
 
-** Q Loss:**
+**Q Loss:**
 
 <img width="989" height="590" alt="a48746aa-9884-4ec2-b18a-88212d2f9b3e" src="https://github.com/user-attachments/assets/ea5296af-7cba-4bd4-96d6-dcb7fd4fcd7d" />
