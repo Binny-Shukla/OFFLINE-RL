@@ -56,7 +56,7 @@ Cosine Annealing LR Scheduler (T_max=100)
 ## **Performance**
 Performance metrics (value loss, Q-loss, policy loss) are logged in TensorBoard.
 
-###Policy Loss:
+### Policy Loss:
 
 <img width="784" height="452" alt="image" src="https://github.com/user-attachments/assets/94013712-f4d1-4d3b-b3ed-8ef43a318362" />
 
