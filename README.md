@@ -1,48 +1,79 @@
-# **Offline RL Collection**
+# **🎯 Decision Transformer (DT) – Offline Reinforcement Learning**
 
-This repository is a research-focused collection of Offline Reinforcement Learning (RL) algorithms, implemented from scratch in PyTorch with a focus on clarity, technical depth, and reproducibility.
+This repository contains a self-contained Jupyter Notebook implementing Decision Transformers (DT) for offline reinforcement learning.
+It’s built from scratch, designed for quick experimentation and understanding of how sequence models (like GPT/BERT) can be applied to RL.
 
-Each algorithm is maintained on its own branch for clean isolation and easy benchmarking. This setup allows us to evolve and experiment with each approach independently while maintaining a unified structure.
+# **🔎 Overview**
 
-**Implemented Algorithms**
+Decision Transformer reframes RL as a sequence modeling problem:
 
-## **Behavior Cloning (BC)**
-A supervised learning baseline for offline RL, trained directly on dataset actions without environment interaction.
-Branch: bc
+Uses Trajectory Transformer idea – predicts future actions from past states, actions, and return-to-go.
 
-## **Implicit Q-Learning (IQL)**
+No explicit value functions or rewards during training – instead, it’s trained like a supervised sequence model.
 
-An advantage-weighted actor-critic algorithm designed for high-quality offline RL without explicit behavior regularization.
-Branch: iql
+Can be run fully offline using HDF5 datasets, without environment rollouts.
 
-### Why This Repo?
+This notebook includes:
 
-Most open-source implementations either:
+    ✅ Complete scratch implementation of DT (no external libraries like D4RL required).
+    
+    ✅ HDF5 dataset loader (h5py).
+    
+    ✅ Training loop with supervised loss (cross-entropy / MSE depending on setting).
+    
+    ✅ plot.py utility for TensorBoard + Matplotlib graphs.
 
-Abstract away the math behind wrappers, or
+### **🛠 How to Use**
 
-Mix multiple algorithms together, making it hard to study them in isolation.
+    Open the notebook:
+    
+    jupyter notebook DecisionTransformer.ipynb
+    
+    
+    Run all cells:
+    
+    Loads dataset from .h5 file.
+    
+    Trains DT with configurable hyperparameters.
+    
+    Logs training via TensorBoard + plots.
 
- #### Here, each branch:
+Visualize results:
 
-Implements the algorithm from scratch using clean PyTorch.
+    tensorboard --logdir ./runs/DT
 
-Includes mathematical derivations (as comments and in the README).
+## **📊 Results**
 
-Uses TensorBoard logging and easily exportable results for papers.
+By the end of training:
 
-#### How to Use
+The loss stabilizes, indicating convergence of sequence modeling.
 
-Each branch has:
+Training vs. validation curves look nearly identical (since DT is purely deterministic & offline).
 
-A Jupyter Notebook (*_training.ipynb) with the full training pipeline.
+Example loss curve:
 
-TensorBoard support for monitoring.
+## **🟦 Policy/Sequence Loss:**
 
-A README explaining the loss functions, math, and performance.
+<img width="640" height="480" alt="log_Figure_1" src="https://github.com/user-attachments/assets/2cf79a9d-06ca-44e5-abcf-f520ce4e3469" />
 
-To clone a specific algorithm branch:
+#### **📂 Repo Structure**
 
-git clone -b <branch-name> https://github.com/Binny-Shukla/offline-rl-collection.git
+│── DecisionTransformer.ipynb   # full implementation  
 
-cd offline-rl-collection
+│── plot.py                     # visualization script  
+
+│── runs/                       # tensorboard logs  
+
+#### **🚀 Key Takeaways**
+
+    DT is not a Q-learning or actor-critic method.
+    
+    It’s pure supervised learning over trajectories.
+    
+    Offline RL datasets → Inference feels the same for training & validation.
+
+#### **🤝 Acknowledgements**
+
+Inspired by the original Decision Transformer paper (Chen et al., 2021)
+
+Implemented fully from scratch for clarity & learning.
