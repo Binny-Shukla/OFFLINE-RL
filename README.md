@@ -1,78 +1,84 @@
-# **🧩 Offline Reinforcement Learning**
+# **🎯 Trajectory Transformer (TT) – Offline Reinforcement Learning**
 
-Learning from the past, without interacting with the future.
+This repository contains a self-contained Jupyter Notebook implementing Trajectory Transformers (TT) for offline reinforcement learning. It’s built from scratch for quick experimentation and to show how sequence models (like GPT) can be applied to model entire RL trajectories.
 
-This repository is a complete collection of Offline Reinforcement Learning (Offline RL) algorithms, built fully from scratch in PyTorch and Jupyter Notebooks.
-It contains implementations of both classic baselines and modern sequence-model approaches, providing a practical playground to understand and experiment with the field.
+## **🔎 Overview**
 
-## **🚀 What is Offline RL?**
-
-Reinforcement Learning (RL) traditionally requires an agent to interact with an environment to learn. But in many real-world settings (e.g., robotics, healthcare, recommendation systems, self-driving), interactions are expensive, unsafe, or outright impossible.
-
-This is where Offline RL comes in:
-
-    The agent learns entirely from a fixed dataset of past experiences.
+    Trajectory Transformer reframes RL as a sequence modeling problem over trajectories:
     
-    No new environment interactions are required.
+    Treats RL data as tokenized sequences: states, actions, rewards.
     
-    Algorithms must carefully balance exploitation of the dataset with avoiding distributional shift errors.
-
-Think of it as:
-
-    “Teaching an agent to drive, only by showing it recorded driving logs — no steering wheel in its hands.”
-
-## **📦 What’s Inside**
-
-This repo currently includes:
-
-**Behavior Cloning (BC) 🐣**
-
-    The simplest baseline — pure supervised learning on state → action pairs.
-
-**TD3 + BC ⚡**
-
-    Combines offline policy learning with a regularized actor-critic backbone.
-
-**Implicit Q-Learning (IQL) 🔎**
-
-    A value-based approach that avoids importance sampling and instability.
-
-**Conservative Q-Learning (CQL) 🛡️**
-
-    Penalizes overestimation by pushing down unseen Q-values, making it safer for deployment.
-
-**Decision Transformer (DT) 🤖✨**
-
-    A sequence-model approach: re-frames RL as a conditional sequence prediction task, using transformer architectures.
-
-### **🌍 Why This Matters**
-
-Offline RL is a critical step towards real-world AI:
-
-    🌱 Safer learning when exploration is risky (robots, medicine).
+    Predicts future actions & rewards conditioned on past trajectory.
     
-    🎮 Works with large datasets (games, logs, simulations).
+    No explicit value functions or policy gradient training – just supervised sequence modeling.
     
-    📈 Bridges supervised learning and reinforcement learning through clever algorithms.
+    Fully offline: trained on pre-collected datasets, no env rollouts required.
+
+This notebook includes:
+
+✅ Complete scratch implementation of TT (no external libraries like D4RL required).
+
+✅ Custom dataset class for building trajectories from offline data.
+
+✅ Training loop with supervised loss.
+
+✅ Matplotlib utilities for plotting smooth training curves.
+
+### **🛠 How to Use**
+
+
+Open the notebook:
+
+    jupyter notebook TrajectoryTransformer.ipynb
+
+
+Run all cells:
+
+Loads offline dataset.
     
-    🧠 Opens the door for foundation models in RL (like Decision Transformer, Trajectory Transformer, Decision Diffuser).
-
-This repo is not just code — it’s a roadmap of Offline RL evolution, from the simplest BC baseline all the way to cutting-edge sequence-based RL.
-
-### **🛠️ Structure**
-
-    *.ipynb → Jupyter notebooks with full scratch implementations.
+    Builds trajectory sequences.
     
-    plot.py → Utility for visualizing learning curves with TensorBoard logs.
+    Trains TT with configurable hyperparameters.
 
-Each algorithm comes with its own README for details.
+Visualize training:
 
-### **✨ Future Directions**
+    python plot.py
 
-📖 Trajectory Transformer (TT)
 
-🌫️ Decision Diffuser
+Generates smooth loss curves with Matplotlib.
 
-🧬 Exploration into Diffusion models + RL
+### **📊 Results**
 
-💡 Whether you’re a researcher, student, or practitioner, this repo is a place to study, build, and extend Offline RL algorithms — understanding how learning from static data can pave the way to real-world AI deployment.
+By the end of training:
+
+    The TT loss stabilizes, showing convergence of trajectory sequence modeling.
+    
+    Loss curves are smooth, indicating reliable offline training.
+
+Example loss curve:
+
+**🟦 TT Loss:**
+
+<img width="640" height="480" alt="Figure_1" src="https://github.com/user-attachments/assets/43414c51-5bce-4530-bf9a-369510d6abb7" />
+
+
+### **📂 Repo Structure**
+
+│── TrajectoryTransformer.ipynb   # Full implementation  
+
+│── plot.py                       # Visualization script  
+
+│── readme.md
+
+
+### **🚀 Key Takeaways**
+
+TT is not Q-learning or actor-critic.
+
+It’s pure supervised learning on trajectory sequences.
+
+Offline RL feels just like training a language model – but on states, actions, and rewards instead of words.
+
+#### **🤝 Acknowledgements**
+
+Inspired by the original Trajectory Transformer paper (Chen et al., 2021).
