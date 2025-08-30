@@ -1,78 +1,80 @@
-# **🧩 Offline Reinforcement Learning**
+# **🎯 Decision Diffuser (DD) – Offline Reinforcement Learning**
 
-Learning from the past, without interacting with the future.
+This repository contains a self-contained Jupyter Notebook implementing Decision Diffusers (DD) for offline reinforcement learning. It’s built from scratch for experimentation and demonstrates how generative diffusion models can be applied to model RL trajectories.
 
-This repository is a complete collection of Offline Reinforcement Learning (Offline RL) algorithms, built fully from scratch in PyTorch and Jupyter Notebooks.
-It contains implementations of both classic baselines and modern sequence-model approaches, providing a practical playground to understand and experiment with the field.
+## **🔎 Overview**
 
-## **🚀 What is Offline RL?**
+Decision Diffuser reframes RL as a conditional generative modeling problem over trajectories:
 
-Reinforcement Learning (RL) traditionally requires an agent to interact with an environment to learn. But in many real-world settings (e.g., robotics, healthcare, recommendation systems, self-driving), interactions are expensive, unsafe, or outright impossible.
+Uses diffusion models to learn the distribution of optimal trajectories.
 
-This is where Offline RL comes in:
+Generates actions by denoising sampled trajectories, conditioned on goals or rewards.
 
-    The agent learns entirely from a fixed dataset of past experiences.
-    
-    No new environment interactions are required.
-    
-    Algorithms must carefully balance exploitation of the dataset with avoiding distributional shift errors.
+Operates fully offline – trained on pre-collected datasets, no environment interaction required.
 
-Think of it as:
+This notebook includes:
 
-    “Teaching an agent to drive, only by showing it recorded driving logs — no steering wheel in its hands.”
+✅ Complete scratch implementation of Decision Diffuser.
 
-## **📦 What’s Inside**
+✅ Custom dataset builder for trajectory conditioning.
 
-This repo currently includes:
+✅ Diffusion training loop with noise scheduling.
 
-**Behavior Cloning (BC) 🐣**
+✅ Matplotlib utilities for clean training & denoising visualizations.
 
-    The simplest baseline — pure supervised learning on state → action pairs.
+### **🛠 How to Use**
 
-**TD3 + BC ⚡**
+Open the notebook:
 
-    Combines offline policy learning with a regularized actor-critic backbone.
+    jupyter notebook DecisionDiffuser.ipynb
 
-**Implicit Q-Learning (IQL) 🔎**
 
-    A value-based approach that avoids importance sampling and instability.
+    Run all cells:
 
-**Conservative Q-Learning (CQL) 🛡️**
+    Loads offline dataset.
 
-    Penalizes overestimation by pushing down unseen Q-values, making it safer for deployment.
+Builds trajectories for diffusion training.
 
-**Decision Transformer (DT) 🤖✨**
+Trains the DD model with configurable hyperparameters.
 
-    A sequence-model approach: re-frames RL as a conditional sequence prediction task, using transformer architectures.
+Visualize training:
 
-### **🌍 Why This Matters**
+    python plot.py
 
-Offline RL is a critical step towards real-world AI:
 
-    🌱 Safer learning when exploration is risky (robots, medicine).
-    
-    🎮 Works with large datasets (games, logs, simulations).
-    
-    📈 Bridges supervised learning and reinforcement learning through clever algorithms.
-    
-    🧠 Opens the door for foundation models in RL (like Decision Transformer, Trajectory Transformer, Decision Diffuser).
+Generates smooth loss curves & denoising plots.
 
-This repo is not just code — it’s a roadmap of Offline RL evolution, from the simplest BC baseline all the way to cutting-edge sequence-based RL.
+### **📊 Results**
 
-### **🛠️ Structure**
+By the end of training:
 
-    *.ipynb → Jupyter notebooks with full scratch implementations.
-    
-    plot.py → Utility for visualizing learning curves with TensorBoard logs.
+The diffusion loss converges, showing the model learns to denoise trajectories effectively.
 
-Each algorithm comes with its own README for details.
+Generated trajectories reflect goal-conditioned behavior.
 
-### **✨ Future Directions**
+Example loss curve:
 
-📖 Trajectory Transformer (TT)
+🟦 Diffusion Training Loss:
 
-🌫️ Decision Diffuser
+<img width="640" height="480" alt="Figure_1" src="https://github.com/user-attachments/assets/35c6d928-ecdd-424b-94d4-086e7e5cfdd6" />
 
-🧬 Exploration into Diffusion models + RL
 
-💡 Whether you’re a researcher, student, or practitioner, this repo is a place to study, build, and extend Offline RL algorithms — understanding how learning from static data can pave the way to real-world AI deployment.
+#### **📂 Repo Structure**
+
+│── DecisionDiffuser.ipynb   # Full implementation  
+
+│── plot.py                  # Visualization script  
+
+│── readme.md  
+
+#### **🚀 Key Takeaways**
+
+Decision Diffuser ≠ Q-learning or Transformers.
+
+It’s denoising-based generative modeling for RL.
+
+Offline RL with DD feels like training an image diffusion model, but on state-action trajectories instead of pixels.
+
+#### **🤝 Acknowledgements**
+
+Inspired by the original Decision Diffuser paper (Janner et al., 2022).
